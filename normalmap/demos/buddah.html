@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="demo.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>normalmap.js Gold Effect - 29a.ch</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="normalmap.js is a library to create interactive lighting and material effects with JavaScript.">
+    <meta name="description" content="normalmap.js is a library to create interactive lighting and material effects with JavaScript.">
+    <meta property="og:title" content="normalmap.js Gold Effect">
+    <meta property="og:url" content="https://29a.ch/sandbox/2016/normalmap.js/buddah.html">
+    <meta property="og:image" content="https://29a.ch/sandbox/2016/normalmap.js/dragon.gif">
+    <link rel="canonical" href="https://29a.ch/sandbox/2016/normalmap.js/">
+  </head>
+  <body>
+    <div class="normalmap-demo-header">
+      <h1><small><a href="https://github.com/jwagner/normalmap.js/">normalmap.js</a></small>Gold Effect</h1>
+      <p>Based on the Happy Buddah Model by <a href="http://graphics.stanford.edu/projects/faxing/happy/">Brian Curless and Marc Levoy - Stanford University</a></p>
+      <ul class="normalmap-demo-nav large-only">
+        <li><a href="dragon.html">Platinum Dragon</a></li>
+        <li><a href="lucy.html">Stone Angel</a></li>
+        <li><a href="buddah.html">Gold Buddah</a></li>
+        <li><a href="carbon.html">Carbon Fiber</a></li>
+        <li><a href="index.html">Helvetia Coin</a></li>
+      </ul>
+      <select onchange="if(this.value) location.href=this.value" class="normalmap-demo-mobile-nav small-only">
+        <option>Change Demo</option>
+        <option value="dragon.html">Platinum Dragon</option>
+        <option value="lucy.html">Stone Angel</option>
+        <option value="buddah.html">Gold Buddah</option>
+        <option value="carbon.html">Carbon Fiber</option>
+        <option value="index.html">Helvetia Coin</option>
+      </select>
+    </div>
+    <canvas id="c" style="padding: 1em 0"></canvas>
+    <script src="normalmap.js"></script>
+    <script src="jquery.min.js"></script>
+    <script src="jquery.normalmap.js"></script>
+    <script src="demo.js"></script>
+    <script>
+      jQuery(function($){
+          $('#c')
+              .normalmap({
+                  normalMap: 'gfx/buddah/normal.png',
+                  ambientMap: 'gfx/buddah/ambient.png',
+                  antiAliasing: true,
+                  singlePass: isMobile,
+                  //- baseColorMap: 'gfx/buddah_gold/ambient.png',
+                  metalness: 1.0,
+                  roughness: 0.25,
+                  subSurfaceScattering: 1,
+                  baseColor: normalmap.vec3(1.0, 0.6, 0.4),
+                  ambient: 1.0
+              }).then(function(lights){
+                  var i = 0.5;
+                  bindLight(lights, { color: normalmap.vec3(i, i, i), zOffset: 1});
+              });
+      });
+    </script>
+  </body>
+</html>

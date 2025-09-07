@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Isometric Demo – Step 3c</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+      body {
+        display: grid;
+        place-items: center;
+        background: #0f0f13;
+        color: #e6e6e6;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
+      }
+      .stage { perspective: 800px; }
+      .iso { position: relative; width: 320px; height: 320px; transform-style: preserve-3d; }
+      .floor {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 512px;
+        height: 512px;
+        /* Show the ambient texture now; lighting will replace this later */
+        object-fit: cover;
+        display: block;
+        /* Isometric placement: rotate the square into a diamond and tilt */
+        transform: translate(-50%, -50%) rotateX(60deg) rotateZ(60deg);
+        transform-origin: center;
+        /* Simple shadow to lift it off the background slightly */
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.45);
+        /* Crisp edges on some browsers */
+        image-rendering: -webkit-optimize-contrast;
+        z-index: 0;
+      }
+      .character {
+        position: absolute;
+        left: 50%;
+        top: 58%;
+        width: 140px;
+        height: auto;
+        transform: translate(-50%, -100%);
+        transform-origin: bottom center;
+        filter: drop-shadow(0 8px 18px rgba(0,0,0,0.55));
+        z-index: 1;
+        pointer-events: none;
+      }
+      .caption {
+        text-align: center;
+        margin-top: 16px;
+        font-size: 14px;
+        opacity: 0.8;
+      }
+      .light-plane {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 512px;
+        height: 512px;
+        transform: translate(-50%, -50%) rotateX(60deg) rotateZ(60deg) translateZ(40px);
+        transform-origin: center;
+        z-index: 2;
+        pointer-events: none; /* let only the handle receive events */
+      }
+      .light {
+        position: absolute;
+        /* width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 30%, #fff8e6, #ffcf6a 60%, #cc7a00 100%);
+        box-shadow: 0 0 10px 4px rgba(255, 200, 120, 0.6), 0 0 28px 8px rgba(255, 160, 60, 0.35);
+        pointer-events: auto;
+        cursor: grab; */
+        transform: translate(-50%, -50%);
+      }
+      .light.dragging { cursor: grabbing; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="stage">
+        <div class="iso">
+          <canvas
+            id="floor"
+            class="floor"
+            data-normal="./normalmap_images/texture-normalmap.png"
+            data-material="./normalmap_images/texture-material.png"
+            aria-label="Isometric floor tile"
+          ></canvas>
+          <div id="light-plane" class="light-plane">
+            <div id="light" class="light" style="left: 60%; top: 30%"></div>
+          </div>
+          <canvas
+            id="character"
+            class="character"
+            data-ambient="./normalmap_images/angel-ambient.png"
+            data-normal="./normalmap_images/angel-normalmap.png"
+            style="left: 75%"
+            aria-label="Character placeholder"
+          ></canvas>
+          <canvas
+            id="buddha"
+            class="character"
+            data-ambient="./normalmap_images/budda-ambient.png"
+            data-normal="./normalmap_images/budda-normalmap.png"
+            style="left: 30%; top:49%"
+            aria-label="Second character (Buddha)"
+          ></canvas>
+          <canvas
+            id="dragon"
+            class="character"
+            data-ambient="./normalmap_images/dragon/ambient.png"
+            data-normal="./normalmap_images/dragon/normal.png"
+            data-material="./normalmap_images/dragon/material.png"
+            style="left: 50%"
+            aria-label="Third character (Dragon)"
+          ></canvas>
+        </div>
+      </div>
+      <div class="caption">Isometric 2d images with normalmap lighting effects demo</div>
+    </main>
+
+    <!-- normalmap.js via local copy; initialization comes next step -->
+    <script src="./normalmap/normalmap.js"></script>
+    <script src="main.js"></script>
+  </body>
+  </html>
